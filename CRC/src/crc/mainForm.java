@@ -308,10 +308,11 @@ public class mainForm extends javax.swing.JFrame {
                 .addGap(3, 3, 3)
                 .addComponent(recvGenPolyTag)
                 .addGap(1, 1, 1)
-                .addGroup(receiverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(reveiverCheck)
-                    .addComponent(syndromeTag)
-                    .addComponent(jLabel10))
+                .addGroup(receiverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(syndromeTag, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(receiverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(reveiverCheck)
+                        .addComponent(jLabel10)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(syndromePolyTag)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -362,7 +363,7 @@ public class mainForm extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(mainForm.class.getName()).log(Level.SEVERE, null, ex);
             
-            JOptionPane.showMessageDialog(this, "Oops!!!! VALUE ERROR IN BITS USE ONLY 1 and 0","Value Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Oops!!!! VALUE ERROR IN BITS!!!! USE ONLY 1 and 0","Value Error",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_getCRCButtonActionPerformed
 
@@ -382,6 +383,10 @@ public class mainForm extends javax.swing.JFrame {
             System.out.println(Arrays.toString(stream));
             int[] generator = CRC.stringToBin(receiverGeneratorTextField.getText());
             int[] errorPattern = CRC.stringToBin(errorPatternTextField.getText());
+            if(errorPattern.length != receivedDataTextField.getText().length() && errorPattern.length != 0){
+                JOptionPane.showMessageDialog(this, "Sorry! You need have proper errorPattern length","Oops...",JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             int[] alteredPattern = CRC.alter(stream, errorPattern);
             dataWithError.setText(CRC.binToString(alteredPattern));
             
@@ -399,7 +404,7 @@ public class mainForm extends javax.swing.JFrame {
         } catch (Exception ex) {
             //recvDebugTextArea.setText("");
             Logger.getLogger(mainForm.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Oops!!!! VALUE ERROR IN BITS USE ONLY 1 and 0","Value Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Oops!!!! VALUE ERROR IN BITS!!! USE ONLY 1 and 0","Value Error",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_reveiverCheckActionPerformed
 
